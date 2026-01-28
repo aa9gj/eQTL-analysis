@@ -1,0 +1,113 @@
+# eQTL Analysis Pipeline Configuration
+# =====================================
+# This is an example configuration file with all available options.
+# Copy this file and modify it for your analysis.
+
+# Input paths (optional - can also be specified via CLI)
+genotype_files: []
+expression_file: null
+covariate_file: null
+sample_mapping_file: null
+
+# Output paths
+output_dir: results
+log_dir: logs
+
+# Reference files
+reference_genome: null
+gene_annotation: null
+
+# Quality Control Settings
+# ------------------------
+# These thresholds are applied during genotype QC
+quality_control:
+  # Minimum variant call rate (proportion of samples with valid genotype)
+  min_call_rate: 0.95
+
+  # Minimum minor allele frequency
+  min_maf: 0.01
+
+  # Maximum sample missing rate
+  max_missing_rate: 0.05
+
+  # Minimum HWE p-value (variants with lower p-values are removed)
+  hwe_pvalue_threshold: 1.0e-6
+
+  # Minimum genotype quality (for VCF files with GQ field)
+  min_gq: 20
+
+  # Minimum read depth (for VCF files with DP field)
+  min_dp: 10
+
+# Imputation Settings
+# -------------------
+# Configuration for Beagle imputation
+imputation:
+  # Path to Beagle JAR file (if not in PATH)
+  beagle_jar_path: null
+
+  # Reference panel for imputation (optional)
+  reference_panel: null
+
+  # Imputation window size in base pairs
+  window_size: 50000
+
+  # Overlap between windows
+  overlap: 3000
+
+  # Effective population size (species-specific)
+  ne: 20000
+
+  # Number of threads for imputation
+  nthreads: 4
+
+  # Memory allocation in GB
+  memory_gb: 8
+
+# Liftover Settings
+# -----------------
+# Configuration for coordinate liftover
+liftover:
+  # Source genome assembly
+  source_assembly: canfam3
+
+  # Target genome assembly
+  target_assembly: canfam4
+
+  # Path to chain file
+  chain_file: null
+
+  # Minimum match proportion for liftover
+  min_match: 0.95
+
+# tensorQTL Settings
+# ------------------
+# Configuration for eQTL mapping
+tensorqtl:
+  # Analysis mode: cis, trans, or both
+  mode: cis
+
+  # Cis window size in base pairs
+  window: 1000000
+
+  # Minimum MAF for variants
+  maf_threshold: 0.05
+
+  # FDR threshold for significance
+  fdr_threshold: 0.05
+
+  # Number of permutations for cis analysis
+  permutations: 10000
+
+  # Use GPU acceleration (requires CUDA)
+  use_gpu: false
+
+  # Random seed for reproducibility
+  seed: 42
+
+# Runtime Settings
+# ----------------
+# General runtime configuration
+n_jobs: 4
+random_seed: 42
+verbose: true
